@@ -73,8 +73,8 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
-                            and type(eval(pline)) is dict:
+                    if pline[0] == '{' and pline[-1] =='}'\
+                            and type(eval(pline)) == dict:
                         _args = pline
                     else:
                         _args = pline.replace(',', '')
@@ -120,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
         name_pattern = r'(?P<name>(?:[a-zA-Z]|_)(?:[a-zA-Z]|\d|_)*)'
         class_match = re.match(name_pattern, args)
         obj_kwargs = {}
-        if class_match is not None:
+        if class_match != None:
             class_name = class_match.group('name')
             params_str = args[len(class_name):].strip()
             params = params_str.split(' ')
@@ -135,16 +135,16 @@ class HBNBCommand(cmd.Cmd):
             )
             for param in params:
                 param_match = re.fullmatch(param_pattern, param)
-                if param_match is not None:
+                if param_match != None:
                     key_name = param_match.group('name')
                     str_v = param_match.group('t_str')
                     float_v = param_match.group('t_float')
                     int_v = param_match.group('t_int')
-                    if float_v is not None:
+                    if float_v != None:
                         obj_kwargs[key_name] = float(float_v)
-                    if int_v is not None:
+                    if int_v != None:
                         obj_kwargs[key_name] = int(int_v)
-                    if str_v is not None:
+                    if str_v != None:
                         obj_kwargs[key_name] = str_v[1:-1].replace('_', ' ')
         else:
             class_name = args
@@ -310,7 +310,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # first determine if kwargs or args
-        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) is dict:
+        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) == dict:
             kwargs = eval(args[2])
             args = []  # reformat kwargs into list, ex: [<name>, <value>, ...]
             for k, v in kwargs.items():
@@ -318,7 +318,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -326,10 +326,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
